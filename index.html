@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizCraft - AI-Powered Quiz Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/26c2237460.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header -->
+      <header class="header">
+        <div class="container">
+          <div class="header-content">
+            <div class="logo">
+              <h1>QuizCraft</h1>
+              <span class="tagline">AI-Powered Learning</span>
+            </div>
+            <nav class="nav">
+              <button class="nav-btn active" data-tab="input">Input</button>
+              <button class="nav-btn" data-tab="mcq">MCQs</button>
+              <button class="nav-btn" data-tab="summary">Summary</button>
+              <button class="nav-btn" data-tab="blanks">Fill Blanks</button>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main">
+        <div class="container">
+          <!-- Input Section -->
+          <section id="input-section" class="section active">
+            <div class="section-header">
+              <h2>Input Your Content</h2>
+              <p>Paste an article or upload a text file to generate educational content</p>
+            </div>
+            
+            <div class="input-card">
+              <div class="input-methods">
+                <button class="method-btn active" data-method="paste">
+                  <i class="fas fa-edit"></i>
+                  Paste Text
+                </button>
+                <button class="method-btn" data-method="upload">
+                  <i class="fas fa-upload"></i>
+                  Upload File
+                </button>
+              </div>
+
+              <div class="input-area" id="paste-area">
+                <textarea 
+                  id="article-input" 
+                  placeholder="Paste your article or passage here..."
+                  rows="12"
+                ></textarea>
+                <div class="input-stats">
+                  <span id="char-count">0 characters</span>
+                  <span id="word-count">0 words</span>
+                </div>
+              </div>
+
+              <div class="input-area hidden" id="upload-area">
+                <div class="upload-zone" id="upload-zone">
+                  <i class="fas fa-file-alt upload-icon"></i>
+                  <p>Drop a text file here or click to browse</p>
+                  <input type="file" id="file-input" accept=".txt,.md" hidden>
+                  <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                    Choose File
+                  </button>
+                </div>
+              </div>
+
+              <div class="action-buttons">
+                <button class="btn btn-primary" id="generate-btn" disabled>
+                  <i class="fas fa-rocket"></i>
+                  Generate Content
+                </button>
+                <button class="btn btn-secondary" id="clear-btn">
+                  <i class="fas fa-trash-alt"></i>
+                  Clear
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- MCQ Section -->
+          <section id="mcq-section" class="section">
+            <div class="section-header">
+              <h2>Multiple Choice Questions</h2>
+              <p>AI-generated questions to test comprehension</p>
+            </div>
+            
+            <div class="content-card">
+              <div class="card-header">
+                <h3>Generated MCQs</h3>
+                <div class="card-actions">
+                  <button class="btn btn-small btn-secondary" id="regenerate-mcq">
+                    <i class="fas fa-sync-alt"></i>
+                    Regenerate
+                  </button>
+                  <button class="btn btn-small btn-primary" id="export-mcq">
+                    <i class="fas fa-file-pdf"></i>
+                    Export PDF
+                  </button>
+                </div>
+              </div>
+              <div class="card-content">
+                <div id="mcq-content" class="empty-state">
+                  <i class="fas fa-question-circle empty-icon"></i>
+                  <p>Generate content first to see MCQs here</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Summary Section -->
+          <section id="summary-section" class="section">
+            <div class="section-header">
+              <h2>Summary & Key Points</h2>
+              <p>Condensed overview of the main ideas</p>
+            </div>
+            
+            <div class="content-card">
+              <div class="card-header">
+                <h3>Generated Summary</h3>
+                <div class="card-actions">
+                  <button class="btn btn-small btn-secondary" id="regenerate-summary">
+                    <i class="fas fa-sync-alt"></i>
+                    Regenerate
+                  </button>
+                  <button class="btn btn-small btn-primary" id="export-summary">
+                    <i class="fas fa-file-pdf"></i>
+                    Export PDF
+                  </button>
+                </div>
+              </div>
+              <div class="card-content">
+                <div id="summary-content" class="empty-state">
+                  <i class="fas fa-clipboard-list empty-icon"></i>
+                  <p>Generate content first to see summary here</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Fill Blanks Section -->
+          <section id="blanks-section" class="section">
+            <div class="section-header">
+              <h2>Fill in the Blanks</h2>
+              <p>Interactive exercises for active learning</p>
+            </div>
+            
+            <div class="content-card">
+              <div class="card-header">
+                <h3>Generated Exercises</h3>
+                <div class="card-actions">
+                  <button class="btn btn-small btn-secondary" id="regenerate-blanks">
+                    <i class="fas fa-sync-alt"></i>
+                    Regenerate
+                  </button>
+                  <button class="btn btn-small btn-primary" id="export-blanks">
+                    <i class="fas fa-file-pdf"></i>
+                    Export PDF
+                  </button>
+                </div>
+              </div>
+              <div class="card-content">
+                <div id="blanks-content" class="empty-state">
+                  <i class="fas fa-pen-alt empty-icon"></i>
+                  <p>Generate content first to see fill-in-the-blanks here</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Loading Overlay -->
+      <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-content">
+          <div class="loading-spinner"></div>
+          <p>Generating your educational content...</p>
+        </div>
+      </div>
+
+      <!-- Toast Notifications -->
+      <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
